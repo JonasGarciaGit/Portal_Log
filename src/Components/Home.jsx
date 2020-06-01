@@ -9,31 +9,44 @@ export default class Home extends React.Component{
     
     state = {
         logs: [],
+        page: 0
     };
 
     componentDidMount(){
         this.loadLogs();
     }
     
-    loadLogs = async() =>{
-        const response = await api.get();
+    loadLogs = async(page = 0) =>{
+        const response = await api.get(`?page=${page}`);
 
         console.log(response.data.Results);
-        this.setState({logs : response.data.Results});
+        this.setState({logs : response.data.Results, page});
     };
 
-    prevPage = () => {}
+    prevPage = () => {
+        const { page } = this.state;
 
-    nextpage = () => {}
+        const pageNumber = page - 1;
 
-    moreDetails = (id) =>{
+        this.loadLogs(pageNumber);
+    }
+
+    nextpage = () => {
+        const { page } = this.state;
+
+        const pageNumber = page + 1;
+
+        this.loadLogs(pageNumber);
+    }
+	
+	    moreDetails = (id) =>{
         var log = document.getElementById(id)
         log.classList.toggle('logData');
     }
-
+    
     render(){
 
-        const {logs} = this.state;
+        const {logs,page} = this.state;
 
         return(
             <div>
@@ -66,8 +79,8 @@ export default class Home extends React.Component{
                         </article>
                     ))}
                     <div className="actions">
-                        <button onClick ={this.prevPage}>Anterior</button>
-                        <button onClick ={this.nextPage}>Proximo</button>
+                        <button disabled={page === 0} onClick ={this.prevPage}>Anterior</button>
+                        <button onClick ={this.nextpage}>Proximo</button>
                     </div>
                 </div>
             </div>
