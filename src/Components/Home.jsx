@@ -4,27 +4,63 @@ import api from '../Services/Api';
 import Main from '../Pages/pages';
 import './styles.css';
 import Header from './Header';
+import {history} from './Historico'
 
 export default class Home extends React.Component {
 
     state = {
         logs: [],
         page: 0,
-        parametroDaBusca:""
+        parametroDaBusca:"",
+        logsForFilter: []
     };
 
-    filtrarLog() {
-        var searchValue = this.state.parametroDaBusca.toLowerCase();
-        document.querySelectorAll("article").forEach(function (tagValue) {
-           var informacoesLog = tagValue.textContent;
-           var corresponde = informacoesLog.toLowerCase().indexOf(searchValue) >= 0;
-           if (corresponde) {
-              tagValue.style.display = '';
-           } else {
-              tagValue.style.display = 'none';
-           }
-        });
-     }
+    
+    populateList = async(page = 0 , limit = 100, direction = 'desc') =>{
+        var response = []
+        var responseJson = this.state.logs
+        while(page == 0){
+            responseJson = await api.get(`?page=${page}&&limit=${limit}&&direction=${direction}`);
+            response.push(responseJson.data.Results);
+            page += 1;       
+        }
+        this.setState({logsForFilter : response})
+    }
+
+    // filtrarLog() {
+    //     var searchValue = this.state.parametroDaBusca.toLowerCase();
+    //     document.querySelectorAll("article").forEach(function (tagValue) {
+    //        var informacoesLog = tagValue.textContent;
+    //        var corresponde = informacoesLog.toLowerCase().indexOf(searchValue) >= 0;
+    //        if (corresponde) {
+    //           tagValue.style.display = '';
+    //        } else {
+    //           tagValue.style.display = 'none';
+    //        }
+    //     });
+    //  }
+
+    filtrarLog = () =>{
+        const {logsForFilter, parametroDaBusca} = this.state
+
+        if(parametroDaBusca == ""){
+          this.loadLogs();
+        }
+
+        var listWithResults = []
+
+        for(var i = 0; i <= logsForFilter.length -1; i++){
+            for(var j = 0; j <= logsForFilter[i].length -1; j++){
+                console.log(logsForFilter[i][j].uuid)
+                if(logsForFilter[i][j].uuid == parametroDaBusca){
+                    listWithResults.push(logsForFilter[i][j])
+                }
+            }
+        }
+
+        this.setState({logs : listWithResults});
+        console.log(listWithResults);
+    }
 
      alterarParametroBusca(e) {
         this.setState({ parametroDaBusca: e.target.value })
@@ -35,11 +71,10 @@ export default class Home extends React.Component {
         this.loadLogs();
     }
 
-    loadLogs = async (page = 0, limit = 5, direction = 'desc') => {
-         const response = await api.get(`?page=${page}&&limit=${limit}&&direction=${direction}`);
-
-        console.log(response.data.Results);
+    loadLogs = async (page = 0, limit = 10, direction = 'desc') => {
+        const response = await api.get(`?page=${page}&&limit=${limit}&&direction=${direction}`);
         this.setState({ logs: response.data.Results, page });
+        this.populateList()
     };
 
     prevPage = () => {
@@ -73,8 +108,8 @@ export default class Home extends React.Component {
 
                 <div className="logs-list">
                     <div class="submit-line">
-                        <input onKeyUp={e => this.filtrarLog()} onChange={e => this.alterarParametroBusca(e)} type="text" />
-                        <button class="submit-lente" type="submit">
+                        <input onChange={e => this.alterarParametroBusca(e)} type="text" />
+                        <button onClick={e => this.filtrarLog()} class="submit-lente" type="submit">
                             <i class="fa fa-search"></i>
                         </button>
                     </div>
