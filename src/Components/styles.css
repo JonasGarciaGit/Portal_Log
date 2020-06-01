@@ -118,6 +118,7 @@
     justify-content: space-between;
     align-items: center;
     box-shadow: 0 0 2px white;
+    z-index: 99;
 }
 .logo{
     width: 150px;

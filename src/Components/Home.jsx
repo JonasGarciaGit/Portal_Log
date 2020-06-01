@@ -16,8 +16,8 @@ export default class Home extends React.Component {
         this.loadLogs();
     }
 
-    loadLogs = async (page = 0) => {
-        const response = await api.get(`?page=${page}`);
+    loadLogs = async (page = 0, limit = 5, direction = 'desc') => {
+         const response = await api.get(`?page=${page}&&limit=${limit}&&direction=${direction}`);
 
         console.log(response.data.Results);
         this.setState({ logs: response.data.Results, page });
@@ -60,8 +60,8 @@ export default class Home extends React.Component {
                         </button>
                     </div>
                     {logs.map(log => (
-                        <article key={log.id}>
-                            <div id={log.id} className='logData'>
+                        <article>
+                            <div key={log.id} id={log.id} className='logData'>
                                 <strong>Uuid :: {log.uuid}</strong>
                                 <p><strong>Id :: </strong>{log.id}</p>
                                 <p><strong>Date :: </strong>{log.date}</p>
@@ -92,5 +92,4 @@ export default class Home extends React.Component {
         );
     }
 }
-
 
