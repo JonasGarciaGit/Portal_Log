@@ -5,22 +5,22 @@ import Main from '../Pages/pages';
 import './styles.css';
 import Header from './Header';
 
-export default class Home extends React.Component{
-    
+export default class Home extends React.Component {
+
     state = {
         logs: [],
         page: 0
     };
 
-    componentDidMount(){
+    componentDidMount() {
         this.loadLogs();
     }
-    
-    loadLogs = async(page = 0) =>{
+
+    loadLogs = async (page = 0) => {
         const response = await api.get(`?page=${page}`);
 
         console.log(response.data.Results);
-        this.setState({logs : response.data.Results, page});
+        this.setState({ logs: response.data.Results, page });
     };
 
     prevPage = () => {
@@ -38,32 +38,37 @@ export default class Home extends React.Component{
 
         this.loadLogs(pageNumber);
     }
-	
-	    moreDetails = (id) =>{
+
+    moreDetails = (id) => {
         var log = document.getElementById(id)
         log.classList.toggle('logData');
     }
-    
-    render(){
 
-        const {logs,page} = this.state;
+    render() {
 
-        return(
+        const { logs, page } = this.state;
+
+        return (
             <div>
-                <Header/>
-                
+                <Header />
+
                 <div className="logs-list">
-                <input id="searchBar"></input>
+                    <div class="submit-line">
+                        <input type="text" />
+                        <button class="submit-lente" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
                     {logs.map(log => (
                         <article key={log.id}>
-                            <div id = {log.id} className = 'logData'>
+                            <div id={log.id} className='logData'>
                                 <strong>Uuid :: {log.uuid}</strong>
                                 <p><strong>Id :: </strong>{log.id}</p>
                                 <p><strong>Date :: </strong>{log.date}</p>
                                 <p><strong>Url :: </strong>{log.url}</p>
                                 <p><strong>RequestBody :: </strong>{log.requestBody}</p>
                                 <p><strong>ResponseBody :: </strong>{log.responseBody}</p>
-                                <p><strong>ResponseVMX :: </strong>{log.responseVmx}</p>                          
+                                <p><strong>ResponseVMX :: </strong>{log.responseVmx}</p>
                                 <p><strong>Name :: </strong>{log.name}</p>
                                 <p><strong>Method :: </strong>{log.method}</p>
                                 <p><strong>HttpStatusCode :: </strong>{log.httpStatusCode}</p>
@@ -73,19 +78,19 @@ export default class Home extends React.Component{
                                 <p><strong>AppVersion :: </strong>{log.appVersion}</p>
                                 <p><strong>Product :: </strong>{log.product}</p>
                                 <p><strong>Lon :: </strong>{log.location.lon}</p>
-                                <p><strong>Lat :: </strong>{log.location.lat}</p>                         
+                                <p><strong>Lat :: </strong>{log.location.lat}</p>
                             </div>
-                            <button onClick = {e => this.moreDetails(log.id)}>Detalhes</button>
+                            <button onClick={e => this.moreDetails(log.id)}>Detalhes</button>
                         </article>
                     ))}
                     <div className="actions">
-                        <button disabled={page === 0} onClick ={this.prevPage}>Anterior</button>
-                        <button onClick ={this.nextpage}>Proximo</button>
+                        <button disabled={page === 0} onClick={this.prevPage}>Anterior</button>
+                        <button onClick={this.nextpage}>Proximo</button>
                     </div>
                 </div>
             </div>
         );
     }
 }
-    
-    
+
+

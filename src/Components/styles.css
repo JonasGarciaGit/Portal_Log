@@ -21,9 +21,24 @@
     margin-top: 10px;
     color: rgba(0, 102, 153);
 }
-#searchBar{
-    font-family: "FontAwesome";
-}
+
+.submit-lente {
+    position:absolute;
+    top:0; right:0;
+    z-index:10;
+    border:none;
+    background:transparent;
+    outline:none;
+    line-height: 45px;
+  }
+  
+  .submit-line {
+    position: relative;
+  }
+  
+  .submit-line input {
+    width: 100%;
+  }
 .logs-list article{
     background: #FFF;
     border: 1px solid #DDD;
