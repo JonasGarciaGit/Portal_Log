@@ -109,3 +109,72 @@
     cursor: pointer;
     color: yellowgreen;
 }
+
+.fundo{
+    background: url('./imagens/capa.jpg');
+    overflow-x: hidden;	
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.container{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.box{
+    width: 360px;
+    height: 240px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 2px black;
+}
+.loginTopo{
+    width: 100%;
+    height: 50px;
+    background-color:  rgba(0, 102, 153);
+    align-content: center;
+    text-align: center;
+    position: relative;
+    top: 0px;
+}
+.loginTopo h3{
+    color: white;
+    line-height: 50px;
+}
+.inputLogin{
+    width: 310px;
+    height: 35px;
+    padding-left: 5px;
+    margin: 15px;
+    outline: none;
+}
+.inputLogin:hover{
+    outline:auto rgba(0, 102, 153, 0.4);
+}
+#esqueciASenha{
+    color: blue;
+    font-size: smaller;
+    cursor: pointer;
+    margin-right: 10px;
+    text-decoration: none;
+    margin-bottom: 5px;
+}
+
+#esqueciASenha:hover{
+    color: yellowgreen;
+    cursor: pointer;
+}
+.btnPadrao{
+    background: rgba(0, 102, 153);
+    border-radius: 5px;
+    border: none;
+    color: white;
+    width: 100px;
+    height: 30px;
+}

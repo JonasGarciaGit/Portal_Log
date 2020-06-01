@@ -1,16 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom'
 import logo from './imagens/logo-branca.png'
-//import {history} from './Historico'
+import {history} from './Historico'
 import './styles.css'
 
 export default class Header extends React.Component {
    
     voltar(){
-    /*history.goBack()
+    history.goBack()
         if(this.props.nome === "Sair"){
            sessionStorage.clear();
-        } */
+        } 
     }
 
     render() {
