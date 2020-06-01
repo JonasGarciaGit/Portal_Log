@@ -27,19 +27,6 @@ export default class Home extends React.Component {
         this.setState({logsForFilter : response})
     }
 
-    // filtrarLog() {
-    //     var searchValue = this.state.parametroDaBusca.toLowerCase();
-    //     document.querySelectorAll("article").forEach(function (tagValue) {
-    //        var informacoesLog = tagValue.textContent;
-    //        var corresponde = informacoesLog.toLowerCase().indexOf(searchValue) >= 0;
-    //        if (corresponde) {
-    //           tagValue.style.display = '';
-    //        } else {
-    //           tagValue.style.display = 'none';
-    //        }
-    //     });
-    //  }
-
     filtrarLog = () =>{
         const {logsForFilter, parametroDaBusca} = this.state
 

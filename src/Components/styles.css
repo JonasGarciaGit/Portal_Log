@@ -31,6 +31,11 @@
     outline:none;
     line-height: 45px;
   }
+.submit-lente:focus{
+    border:none;
+    outline:none;
+}
+
   
   .submit-line {
     position: relative;
