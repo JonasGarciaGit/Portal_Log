@@ -1,4 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
 
+*{
+    font-family: 'Lato', sans-serif;
+}
 
 .logs-list{
     max-width: 700px;
@@ -25,6 +29,11 @@
     margin-bottom: 20px;
 }
 
+.logData{
+    max-height: 100px;
+    overflow: hidden;
+}
+
 .logs-list article p{
     font-size: 16px;
     color: #999;
@@ -32,7 +41,8 @@
     line-height: 24px;
 }
 
-.logs-list article a{
+.logs-list article button{
+    width: 100%;
     height: 42px;
     border-radius: 5px;
     border: 2px solid rgba(0, 102, 153);
@@ -45,11 +55,11 @@
     display: flex;
     justify-content: center;
     align-content: center;
-    line-height: 42px;
+    line-height: 36px;
     transition: all 0.2s;
 }
 
-.logs-list article a:hover{
+.logs-list article button:hover{
     background: rgba(0, 102, 153);
     color: #FFF;
 }

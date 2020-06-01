@@ -26,6 +26,11 @@ export default class Home extends React.Component{
 
     nextpage = () => {}
 
+    moreDetails = (id) =>{
+        var log = document.getElementById(id)
+        log.classList.toggle('logData');
+    }
+
     render(){
 
         const {logs} = this.state;
@@ -38,11 +43,26 @@ export default class Home extends React.Component{
                 <input id="searchBar"></input>
                     {logs.map(log => (
                         <article key={log.id}>
-                            <strong>{log.id}</strong>
-                            <p>{log.date}</p>
-                            <p>{log.url}</p>
-                        <   p>{log.responseBody}</p>
-                            <a href="">Detalhes</a>
+                            <div id = {log.id} className = 'logData'>
+                                <strong>Uuid :: {log.uuid}</strong>
+                                <p><strong>Id :: </strong>{log.id}</p>
+                                <p><strong>Date :: </strong>{log.date}</p>
+                                <p><strong>Url :: </strong>{log.url}</p>
+                                <p><strong>RequestBody :: </strong>{log.requestBody}</p>
+                                <p><strong>ResponseBody :: </strong>{log.responseBody}</p>
+                                <p><strong>ResponseVMX :: </strong>{log.responseVmx}</p>                          
+                                <p><strong>Name :: </strong>{log.name}</p>
+                                <p><strong>Method :: </strong>{log.method}</p>
+                                <p><strong>HttpStatusCode :: </strong>{log.httpStatusCode}</p>
+                                <p><strong>Environment :: </strong>{log.environment}</p>
+                                <p><strong>DeviceInfo :: </strong>{log.deviceInfo}</p>
+                                <p><strong>CompanyName :: </strong>{log.companyName}</p>
+                                <p><strong>AppVersion :: </strong>{log.appVersion}</p>
+                                <p><strong>Product :: </strong>{log.product}</p>
+                                <p><strong>Lon :: </strong>{log.location.lon}</p>
+                                <p><strong>Lat :: </strong>{log.location.lat}</p>                         
+                            </div>
+                            <button onClick = {e => this.moreDetails(log.id)}>Detalhes</button>
                         </article>
                     ))}
                     <div className="actions">
