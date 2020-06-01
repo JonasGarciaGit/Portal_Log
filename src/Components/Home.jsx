@@ -9,8 +9,27 @@ export default class Home extends React.Component {
 
     state = {
         logs: [],
-        page: 0
+        page: 0,
+        parametroDaBusca:""
     };
+
+    filtrarLog() {
+        var searchValue = this.state.parametroDaBusca.toLowerCase();
+        document.querySelectorAll("article").forEach(function (tagValue) {
+           var informacoesLog = tagValue.textContent;
+           var corresponde = informacoesLog.toLowerCase().indexOf(searchValue) >= 0;
+           if (corresponde) {
+              tagValue.style.display = '';
+           } else {
+              tagValue.style.display = 'none';
+           }
+        });
+     }
+
+     alterarParametroBusca(e) {
+        this.setState({ parametroDaBusca: e.target.value })
+        console.log(this.state.parametroDaBusca)
+    }
 
     componentDidMount() {
         this.loadLogs();
@@ -54,7 +73,7 @@ export default class Home extends React.Component {
 
                 <div className="logs-list">
                     <div class="submit-line">
-                        <input type="text" />
+                        <input onKeyUp={e => this.filtrarLog()} onChange={e => this.alterarParametroBusca(e)} type="text" />
                         <button class="submit-lente" type="submit">
                             <i class="fa fa-search"></i>
                         </button>
