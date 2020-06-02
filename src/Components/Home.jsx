@@ -113,11 +113,13 @@ export default class Home extends React.Component {
                 <div className="logs-list">
                     <div class="submit-line">
                         <input onChange={e => this.alterarParametroBusca(e)} type="text" placeholder="Digite o uuid..." />
-                        <button onClick={e => this.filtrarLog()} class="submit-lente" type="submit">
+                        <button class="submit-lente" type="submit">
                             <i class="fa fa-search"></i>
                         </button>
                     </div>
                     <input id="inputDate" onChange={e => this.getDate(e)} type="date"></input>
+                    <button className="btnAplicarFiltro" onClick={e => this.filtrarLog()}>Aplicar Filtros</button>
+                    <p>&nbsp;</p>
                     {logs.map(log => (
                         <article>
                             <div key={log.id} id={log.id} className='logData'>

@@ -81,6 +81,29 @@
     transition: all 0.2s;
 }
 
+.btnAplicarFiltro{
+    width: 20%;
+    height: 42px;
+    border-radius: 5px;
+    border: 2px solid rgba(0, 102, 153);
+    background: none;
+    margin-top: 10px;
+    color: rgba(0, 102, 153);
+    font-weight: bold;
+    font-size: 12px;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    line-height: 36px;
+    transition: all 0.2s; 
+}
+
+.btnAplicarFiltro:hover{
+    background: rgba(0, 102, 153);
+    color: #FFF;
+}
+
 .logs-list article button:hover{
     background: rgba(0, 102, 153);
     color: #FFF;
