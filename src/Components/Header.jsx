@@ -7,10 +7,12 @@ import './styles.css'
 export default class Header extends React.Component {
    
     voltar(){
-    history.goBack()
-        if(this.props.nome === "Sair"){
+    if(this.props.nome === "Voltar"){
+        history.go("/portallogs/home")
+    }
+    if(this.props.nome === "Sair"){
            sessionStorage.clear();
-        } 
+    } 
     }
 
     render() {

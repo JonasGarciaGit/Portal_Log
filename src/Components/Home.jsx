@@ -36,7 +36,7 @@ export default class Home extends React.Component {
 
 
         if (parametroDaBusca == "" && date == "") {
-            this.loadLogs();
+            alert("Nenhum parametro de busca informado!")
         }
         else if (parametroDaBusca != "" && date != "") {
             for (var i = 0; i <= logsForFilter.length - 1; i++) {
@@ -108,7 +108,7 @@ export default class Home extends React.Component {
 
         return (
             <div>
-                <Header />
+                <Header nome="Voltar"/>
 
                 <div className="logs-list">
                     <div class="submit-line">
