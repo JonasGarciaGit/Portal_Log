@@ -4,54 +4,71 @@ import api from '../Services/Api';
 import Main from '../Pages/pages';
 import './styles.css';
 import Header from './Header';
-import {history} from './Historico'
+import { history } from './Historico'
 
 export default class Home extends React.Component {
 
     state = {
         logs: [],
         page: 0,
-        parametroDaBusca:"",
-        logsForFilter: []
+        parametroDaBusca: "",
+        logsForFilter: [],
+        date: "",
     };
 
-    
-    populateList = async(page = 0 , limit = 100, direction = 'desc') =>{
+
+    populateList = async (page = 0, limit = 100, direction = 'desc') => {
         var response = []
         var responseJson = this.state.logs
-        while(page == 0){
+        while (page == 0) {
             responseJson = await api.get(`?page=${page}&&limit=${limit}&&direction=${direction}`);
             response.push(responseJson.data.Results);
-            page += 1;       
+            page += 1;
         }
-        this.setState({logsForFilter : response})
+        this.setState({ logsForFilter: response })
     }
 
-    filtrarLog = () =>{
-        const {logsForFilter, parametroDaBusca} = this.state
-
-        if(parametroDaBusca == ""){
-          this.loadLogs();
-        }
+    filtrarLog = () => {
+        const { logsForFilter, parametroDaBusca, date } = this.state
 
         var listWithResults = []
+        this.setState({ logs: [] });
 
-        for(var i = 0; i <= logsForFilter.length -1; i++){
-            for(var j = 0; j <= logsForFilter[i].length -1; j++){
-                console.log(logsForFilter[i][j].uuid)
-                if(logsForFilter[i][j].uuid == parametroDaBusca){
-                    listWithResults.push(logsForFilter[i][j])
+
+        if (parametroDaBusca == "" && date == "") {
+            this.loadLogs();
+        }
+        else if (parametroDaBusca != "" && date != "") {
+            for (var i = 0; i <= logsForFilter.length - 1; i++) {
+                for (var j = 0; j <= logsForFilter[i].length - 1; j++) {
+                    if (logsForFilter[i][j].uuid == parametroDaBusca &&
+                        logsForFilter[i][j].date.substring(0, 10) == date) {
+                        listWithResults.push(logsForFilter[i][j])
+                    }
+                }
+            }
+        } else {
+            for (var i = 0; i <= logsForFilter.length - 1; i++) {
+                for (var j = 0; j <= logsForFilter[i].length - 1; j++) {
+                    if (logsForFilter[i][j].uuid == parametroDaBusca ||
+                        logsForFilter[i][j].date.substring(0, 10) == date) {
+                        listWithResults.push(logsForFilter[i][j])
+                    }
                 }
             }
         }
 
-        this.setState({logs : listWithResults});
-        console.log(listWithResults);
+        this.setState({date: ""})
+        document.getElementById("inputDate").value = ""
+        this.setState({ logs: listWithResults });
     }
 
-     alterarParametroBusca(e) {
+    getDate(e) {
+        this.setState({ date: e.target.value })
+    }
+
+    alterarParametroBusca(e) {
         this.setState({ parametroDaBusca: e.target.value })
-        console.log(this.state.parametroDaBusca)
     }
 
     componentDidMount() {
@@ -95,11 +112,12 @@ export default class Home extends React.Component {
 
                 <div className="logs-list">
                     <div class="submit-line">
-                        <input onChange={e => this.alterarParametroBusca(e)} type="text" />
+                        <input onChange={e => this.alterarParametroBusca(e)} type="text" placeholder="Digite o uuid..." />
                         <button onClick={e => this.filtrarLog()} class="submit-lente" type="submit">
                             <i class="fa fa-search"></i>
                         </button>
                     </div>
+                    <input id="inputDate" onChange={e => this.getDate(e)} type="date"></input>
                     {logs.map(log => (
                         <article>
                             <div key={log.id} id={log.id} className='logData'>
