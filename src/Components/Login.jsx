@@ -20,7 +20,7 @@ export default class Login extends React.Component {
         if (state.login == "" || state.senha == "") {
             return alert('Os campos login e senha não podem estar vazios!')
         }
-        axios.post("http://localhost:8080/v0/portal/usuario/login", {
+        axios.post("http://localhost:8081/v0/portal/usuario/login", {
             login: state.login,
             senha: state.senha
         })

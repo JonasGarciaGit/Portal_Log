@@ -6,13 +6,16 @@ import './styles.css'
 
 export default class Header extends React.Component {
    
-    voltar(){
-    if(this.props.nome === "Voltar"){
-        history.go("/portallogs/home")
-    }
-    if(this.props.nome === "Sair"){
-           sessionStorage.clear();
+    logout(){
+    if(this.props.sair === "Sair"){
+         history.go("/portallogs")
+         sessionStorage.clear();
     } 
+    }
+    goToHome(){
+        if(this.props.home === "Home"){
+            history.go("/portallogs/home")
+        }
     }
 
     render() {
@@ -21,7 +24,8 @@ export default class Header extends React.Component {
                <nav className="navegacao">
                     
                     <span className="tituloPrincipal"><img align="left" className="logo" src={logo}/></span>
-                    <span className="opcaoSaidaVoltar" onClick = {e => this.voltar()}>{this.props.nome} {(this.props.nome) == "Sair" ? <i class="fas fa-sign-out-alt"></i> : (this.props.nome) == "Voltar" ? <i class="fas fa-undo-alt"></i> : ""}  </span>
+                    <span className="opcaoSaidaVoltar" onClick = {e => this.goToHome()}>{this.props.home} {(this.props.home) == "Home" ? <i class="fas fa-home"></i> : ""}  </span>
+                    <span className="opcaoSaidaVoltar" onClick = {e => this.logout()}>{this.props.sair} {(this.props.sair) == "Sair" ? <i class="fas fa-sign-out-alt"></i> : ""} </span>
                </nav>
             </div>
         )

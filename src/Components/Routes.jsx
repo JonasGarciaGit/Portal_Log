@@ -10,7 +10,7 @@ const Routes = () =>(
     <Router history={history}>
         <Switch>
             <Route component={Login} exact path="/portallogs" ></Route>
-            <Route component={Home} exact path="/portallogs/home"></Route>
+            <RotaPrivada component={Home} exact path="/portallogs/home"></RotaPrivada>
         </Switch>
     </Router>
 )

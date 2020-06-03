@@ -108,7 +108,7 @@ export default class Home extends React.Component {
 
         return (
             <div>
-                <Header nome="Voltar"/>
+                <Header home="Home" sair="Sair"/>
 
                 <div className="logs-list">
                     <div class="submit-line">

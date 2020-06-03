@@ -3,7 +3,7 @@ import {Route, Redirect} from 'react-router'
 
 const PrivateRoute = props  =>{
     const estaLogado = !!sessionStorage.getItem('userToken')
-    return estaLogado ? <Route {...props}/> : <Redirect to="/portalapi/adm" />
+    return estaLogado ? <Route {...props}/> : <Redirect to="/portallogs" />
 }
 
 
