@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'http://localhost:8080/elasticOrbitall/v1/logs/esorblog-*'
+    baseURL: window.env.API_DOMAIN_ADDR
 });
 
 export default api;
