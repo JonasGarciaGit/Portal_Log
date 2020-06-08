@@ -12,6 +12,7 @@ export default class Home extends React.Component {
         logs: [],
         page: 0,
         parametroDaBusca: "",
+        parametroDaBuscaURL: "",
         logsForFilter: [],
         date: "",
     };
@@ -29,20 +30,26 @@ export default class Home extends React.Component {
     }
 
     filtrarLog = () => {
-        const { logsForFilter, parametroDaBusca, date } = this.state
+        const { logsForFilter, parametroDaBusca, date , parametroDaBuscaURL} = this.state
 
         var listWithResults = []
         this.setState({ logs: [] });
 
 
-        if (parametroDaBusca == "" && date == "") {
+        if (parametroDaBusca == "" && date == "" && parametroDaBuscaURL == "") {
             alert("Nenhum parametro de busca informado!")
         }
-        else if (parametroDaBusca != "" && date != "") {
+        else if (parametroDaBusca != "" && date != "" ||
+                 parametroDaBusca != "" && parametroDaBuscaURL != "" ||
+                 date != "" && parametroDaBuscaURL != ""||
+                 parametroDaBusca != "" && date != "" && parametroDaBuscaURL != "") {
             for (var i = 0; i <= logsForFilter.length - 1; i++) {
                 for (var j = 0; j <= logsForFilter[i].length - 1; j++) {
-                    if (logsForFilter[i][j].uuid == parametroDaBusca &&
-                        logsForFilter[i][j].date.substring(0, 10) == date) {
+                    if (
+                        logsForFilter[i][j].uuid == parametroDaBusca && logsForFilter[i][j].date.substring(0, 10) == date ||
+                        logsForFilter[i][j].uuid == parametroDaBusca &&  logsForFilter[i][j].url == parametroDaBuscaURL ||
+                        logsForFilter[i][j].url == parametroDaBuscaURL && logsForFilter[i][j].date.substring(0, 10) == date ||
+                        logsForFilter[i][j].uuid == parametroDaBusca && logsForFilter[i][j].date.substring(0, 10) == date && logsForFilter[i][j].url == parametroDaBuscaURL ) {
                         listWithResults.push(logsForFilter[i][j])
                     }
                 }
@@ -51,7 +58,8 @@ export default class Home extends React.Component {
             for (var i = 0; i <= logsForFilter.length - 1; i++) {
                 for (var j = 0; j <= logsForFilter[i].length - 1; j++) {
                     if (logsForFilter[i][j].uuid == parametroDaBusca ||
-                        logsForFilter[i][j].date.substring(0, 10) == date) {
+                        logsForFilter[i][j].date.substring(0, 10) == date ||
+                        logsForFilter[i][j].url == parametroDaBuscaURL) {
                         listWithResults.push(logsForFilter[i][j])
                     }
                 }
@@ -61,6 +69,11 @@ export default class Home extends React.Component {
         this.setState({date: ""})
         document.getElementById("inputDate").value = ""
         this.setState({ logs: listWithResults });
+        // this.setState({parametroDaBuscaURL: ""})
+        // document.getElementById("inputURL").value = ""
+        // this.setState({parametroDaBusca: ""})
+        // document.getElementById("inputUuid").value = ""
+        
     }
 
     getDate(e) {
@@ -69,6 +82,10 @@ export default class Home extends React.Component {
 
     alterarParametroBusca(e) {
         this.setState({ parametroDaBusca: e.target.value })
+    }
+
+    alterarParametroBuscaURL(e){
+        this.setState({parametroDaBuscaURL: e.target.value})
     }
 
     componentDidMount() {
@@ -112,12 +129,13 @@ export default class Home extends React.Component {
 
                 <div className="logs-list">
                     <div class="submit-line">
-                        <input onChange={e => this.alterarParametroBusca(e)} type="text" placeholder="Digite o uuid..." />
+                        <input id="inputUuid" onChange={e => this.alterarParametroBusca(e)} type="text" placeholder="Digite o uuid..." />
                         <button class="submit-lente" type="submit">
                             <i class="fa fa-search"></i>
                         </button>
                     </div>
                     <input id="inputDate" onChange={e => this.getDate(e)} type="date"></input>
+                    <input id="inputURL" onChange={e => this.alterarParametroBuscaURL(e)} type="text" placeholder="Digite o endpoint..."></input>
                     <button className="btnAplicarFiltro" onClick={e => this.filtrarLog()}>Aplicar Filtros</button>
                     <p>&nbsp;</p>
                     {logs.map(log => (
